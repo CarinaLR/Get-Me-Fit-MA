@@ -2,12 +2,33 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import {
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View,
+  Button,
+  FlatList,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import AppNavigator from './navigation/AppNavigator';
 
 export default function App(props) {
+  const [weightLossGoals, setWeightLossGoals] = useState([]);
+
+  const addGoalHandler = goalTitle => {
+    setWeightLossGoals(currentGoals => [
+      ...currentGoals,
+      { key: Math.random().toString(), value: goalTitle },
+    ]);
+  };
+
+  const removeGoalHandler = goalId => {
+    setWeightLossGoals(currentGoals => {
+      return currentGoals.filter(goal => goal.id !== goalId);
+    });
+  };
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
@@ -23,6 +44,23 @@ export default function App(props) {
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <AppNavigator />
+        {/* <View style={styles.yourGoal}>
+          <LinksScreen
+            onAddGoal={addGoalHandler}
+            onResetGoal={removeGoalHandler}
+          />
+          <FlatList
+            keyExtractor={(item, index) => item.key}
+            data={weightLossGoals}
+            renderItem={itemData => (
+              <GoalInput
+                id={itemData.item.id}
+                onDelete={removeGoalHandler}
+                title={itemData.item.value}
+              />
+            )}
+          />
+        </View> */}
       </View>
     );
   }
@@ -58,5 +96,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  yourGoal: {
+    flex: 1,
+    padding: 40,
+    backgroundColor: 'grey',
   },
 });

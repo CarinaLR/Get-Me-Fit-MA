@@ -1,5 +1,5 @@
 import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   Platform,
@@ -8,9 +8,11 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Button,
 } from 'react-native';
 
-import { MonoText } from '../components/StyledText';
+import LinksScreen from './LinksScreen';
+import GoalInput from '../components/GoalInput';
 
 export default function HomeScreen() {
   return (
@@ -45,7 +47,7 @@ export default function HomeScreen() {
           <View
             style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
           >
-            <MonoText>get started now</MonoText>
+            <Button title="get started now" />
           </View>
 
           {/* <Text style={styles.welcomeText}>
